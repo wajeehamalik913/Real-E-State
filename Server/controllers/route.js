@@ -29,6 +29,7 @@ const moduleActiveDeactiveRoute = require("./moduleActiveDeactive/_routes")
 const accountRoute = require("./account/_routes")
 const invoicesRoute = require("./invoices/_routes")
 
+
 //Api`s
 router.use('/contact', contactRoute);
 router.use('/property', propertyRoute)

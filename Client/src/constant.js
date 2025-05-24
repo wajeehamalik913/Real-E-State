@@ -1,3 +1,5 @@
+
 export const constant = {
-    baseUrl: process.env.REACT_APP_BASE_URL
-}
+    baseUrl: process.env.REACT_APP_API_BASE_URL 
+  };
+  

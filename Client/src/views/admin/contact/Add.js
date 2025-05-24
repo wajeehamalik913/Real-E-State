@@ -33,7 +33,7 @@ const Add = (props) => {
     const AddData = async () => {
         try {
             setIsLoding(true)
-            let response = await postApi('api/form/add', { ...values, moduleId: props?.contactData?._id })
+            let response = await postApi('api/contact/add', { ...values, moduleId: props?.contactData?._id })
             if (response.status === 200) {
                 props.onClose();
                 props.setAction((pre) => !pre)

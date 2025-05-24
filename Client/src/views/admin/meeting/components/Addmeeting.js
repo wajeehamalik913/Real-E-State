@@ -43,17 +43,57 @@ const AddMeeting = (props) => {
         initialValues: initialValues,
         validationSchema: MeetingSchema,
         onSubmit: (values, { resetForm }) => {
-            
+            AddData(values, resetForm);
         },
     });
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik
-
-    const AddData = async () => {
-
-    };
-
+      
+    const AddData = async (values, resetForm) => {
+        try {
+          setIsLoding(true);
+          console.log('Adding meeting with:', values);
+      
+          const payload = {
+            ...values,
+            attendes: values.related === 'Contact' ? values.attendes : [],
+            attendesLead: values.related === 'Lead' ? values.attendesLead : [],
+          };
+      
+          const res = await postApi('api/meeting/add', payload);
+          console.log('Response:', res);
+      
+          if (res.status === 201) {
+            toast.success('Meeting added successfully');
+            fetchAllData();
+            resetForm(); 
+            setAction && setAction('create');
+            onClose();
+          } else {
+            // If not 201, manually throw error to enter catch
+            throw new Error('Unexpected response status: ' + res.status);
+          }
+        } catch (err) {
+          console.error('AddData error:', err);
+          toast.error('Something went wrong');
+        } finally {
+          setIsLoding(false);
+        }
+      };
+      
     const fetchAllData = async () => {
+        try {
+            setIsLoding(true);
+            const contactRes = await getApi('api/contact');
+            const leadRes = await getApi('api/lead');
         
+            if (contactRes.status === 200) setContactData(contactRes.data?.data || []);
+            if (leadRes.status === 200) setLeadData(leadRes.data?.data || []);
+        
+          } catch (err) {
+            toast.error('Failed to fetch data');
+          } finally {
+            setIsLoding(false);
+          }
     }
 
     useEffect(() => {

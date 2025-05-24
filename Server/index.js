@@ -6,10 +6,11 @@ const cors = require('cors');
 
 
 const port = 5001
-require('dotenv').config()
 
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
 
 //Setup Express App
 const app = express();

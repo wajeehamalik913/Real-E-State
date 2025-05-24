@@ -172,7 +172,7 @@ const login = async (req, res) => {
 
         res.status(200).setHeader('Authorization', `Bearer${token}`).json({ token: token, user });
     } catch (error) {
-        res.status(500).json({ error: 'An error occurred' });
+        res.status(500).json({ error: 'An error occurred',error });
     }
 }
 
